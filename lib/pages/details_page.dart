@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:greenery/global_values.dart';
+import 'package:greenery/widgets/feature_item_row.dart';
+import 'package:greenery/widgets/feature_help_item_row.dart';
 import 'dart:math' as math;
 
 class DetailsScreen extends StatelessWidget {
@@ -51,7 +53,7 @@ class DetailsScreen extends StatelessWidget {
                 SizedBox(height: screenHeight * 0.025),
                 featureItemRow(Icons.ac_unit, 'Humidity', 'up to 82%'),
                 SizedBox(height: screenHeight * 0.025),
-                featureItemRow(Icons.straighten, 'Size', '38" - 48"tdll'),
+                featureItemRow(Icons.straighten, 'Size', '38" - 48" tall'),
               ],
             ),
           ),
@@ -102,56 +104,6 @@ class DetailsScreen extends StatelessWidget {
             ),
           )
         ],
-      ),
-    );
-  }
-
-  featureItemRow(icon, name, title) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            Icon(
-              icon,
-              color: Colors.white,
-            ),
-            SizedBox(width: 6.0),
-            Text(
-              name,
-              style: TextStyle(color: Colors.white, fontSize: 20.0),
-            )
-          ],
-        ),
-        Text(title, style: TextStyle(color: Colors.white54, fontSize: 20.0))
-      ],
-    );
-  }
-
-  itemRow(title, screenWidth, screenHeight) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 48.0),
-      child: Container(
-        height: 60.0,
-        decoration: BoxDecoration(
-            color: AppValues.darkGreenColor,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(32.0),
-                bottomLeft: Radius.circular(32.0))),
-        child: Row(
-          children: <Widget>[
-            SizedBox(width: screenWidth * 0.07),
-            Icon(Icons.add, color: Colors.white, size: screenHeight * 0.035),
-            SizedBox(width: screenWidth * 0.07),
-            Text(
-              title,
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: screenWidth * 0.06,
-                  fontWeight: FontWeight.w500),
-            )
-          ],
-        ),
       ),
     );
   }

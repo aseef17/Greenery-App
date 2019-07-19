@@ -1,10 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:greenery/global_values.dart';
 import 'package:greenery/pages/details_page.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:greenery/widgets/feature_box.dart';
+import 'dart:io' show Platform;
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
-
+  
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -30,7 +33,7 @@ class HomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     SizedBox(height: screenHeight * 0.015),
-                    Icon(Icons.arrow_back),
+                    Icon(Icons.arrow_back, size: screenHeight * 0.04,),
                     SizedBox(height: screenHeight * 0.015),
                     Container(
                       width: screenWidth * 0.65,
@@ -76,8 +79,13 @@ class HomePage extends StatelessWidget {
                         ),
                         Container(
                             width: screenWidth * 0.45,
-                            child: Image.network(AppValues.productImage,
-                                fit: BoxFit.cover))
+                            child: CachedNetworkImage(
+                              imageUrl: AppValues.productImage,
+                              placeholder: (context, url) =>
+                                Platform.isAndroid ? CircularProgressIndicator() : CupertinoActivityIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  new Icon(Icons.error),
+                            ))
                       ],
                     ),
                     SizedBox(height: screenHeight * 0.015),
@@ -89,60 +97,30 @@ class HomePage extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Container(
-                color: AppValues.greenColor,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(height: screenHeight * 0.02),
-                      Text("Planting", style: TextStyle(color: Colors.white)),
-                      Padding(
-                        padding: EdgeInsets.only(top: screenHeight * 0.025),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              bottomItem(screenWidth, screenHeight, '250', 'ml',
-                                  'water'),
-                              bottomItem(screenWidth, screenHeight, '18', 'C',
-                                  'sunshine'),
-                            ]),
-                      )
-                    ],
-                  ),
+              color: AppValues.greenColor,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: screenHeight * 0.02),
+                    Text("Planting", style: TextStyle(color: Colors.white)),
+                    Padding(
+                      padding: EdgeInsets.only(top: screenHeight * 0.025),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            bottomItem(screenWidth, screenHeight, '250', 'ml',
+                                'water'),
+                            bottomItem(screenWidth, screenHeight, '18', 'C',
+                                'sunshine'),
+                          ]),
+                    )
+                  ],
                 ),
               ),
+            ),
           )
-        ],
-      ),
-    );
-  }
-
-  bottomItem(screenWidth, screenHeight, mainText, subText, bottomText) {
-    return Container(
-      width: screenWidth / 2 - 50,
-      height: screenHeight * 0.13,
-      decoration: BoxDecoration(
-          color: AppValues.darkGreenColor,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(screenWidth * 0.05),
-              topRight: Radius.circular(screenWidth * 0.05))),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(mainText,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: screenWidth * 0.13)),
-              SizedBox(width: screenWidth * 0.005),
-              Text(subText, style: TextStyle(color: Colors.white54))
-            ],
-          ),
-          Text(bottomText, style: TextStyle(color: Colors.white54))
         ],
       ),
     );
